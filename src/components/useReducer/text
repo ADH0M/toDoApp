@@ -1,0 +1,138 @@
+import React, { useReducer, useRef, useState } from 'react';
+
+const ToDoList = () => {
+    const listtext = useRef('');
+
+//     const reducer = (state, action) => {
+//     switch (action.type) {
+
+//       case 'add':
+//         return [ { headers:state[0].headers , data:[{...action.payload}] } ];
+
+//       default:
+//         return state;
+//     }
+//   };
+
+//   const [state, dispatch] = useReducer(reducer , [{headers:['text' , 'id' ] , data:[] } ] );
+  
+//   const handleList = (e)=>{
+//     dispatch({type:'add', payload:{ text:listtext.current.value  , id: state.length + 1 } });
+//   };
+
+  const initState = {
+        headers:[{ Id:'Id' , username:'username' , text:'text' } ] ,
+        data:[{ Id:1 , username:'adham' , text:[{ textNumber:'1' , text:'my name is adham said' }]}]
+    }
+
+  const [isEdit , setIsEdit] = useState(true)
+  const initailState = [ { id :1 , text : 'do you have anything to create your app ..'} ];
+  const reducer = (state  , action) =>{
+    switch (action.type){
+            case 'add':
+                return [...state , { id : state.length + 1 , text : action.text  }];
+            
+            case 'edit':
+                return state.map(item  => item.id === action.id ? {...item , text:action.text}: item )
+                
+            //  [...state , {text:action.text}]
+            
+            case 'delete':
+                return state.filter(item => item.id != action.id );
+                
+
+            
+            default:
+                return state
+        }
+  };
+
+  
+  const [ state , dispatch ] = useReducer(reducer , initailState );
+  
+  
+  function handleText (){
+    return dispatch( {type:'add' , text:listtext.current.value  })
+  }
+
+  function handleDelete (id){
+    return dispatch({type:'delete', id });
+  }
+
+function handleEdit(id , text){
+    dispatch({type:'edit' , id:id , text:text });
+}
+
+
+  return (
+    <div className="flex justify-center  items-center h-screen">
+      <div className="bg-gray-400 p-8  rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold  text-center mb-4">To-Do List</h2>
+        <div className="flex items-center  mb-4">
+          <input
+            type="text"
+            id="field"
+            className="border rounded-md p-2 w-full mr-2 focus:outline-blue-500"
+            ref={listtext}
+          />
+          <button
+            type="button"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            // onClick={handleList}
+            onClick={handleText}
+          >
+            Add
+          </button>
+        </div>
+
+        {state.length>0 && <ul className="space-y-2">
+            <table >
+                <tr>
+                <th>text </th>
+                <th>id </th>
+                </tr>
+                
+                 {state.map(item =>( 
+                     <li key={item.id}>
+                        <tr >
+                            <td>
+                        <input type="text" value={item.text} onChange={(e) => handleEdit(item.id ,e.target.value)} />
+                    {item.text}
+                            </td>
+                        <td>{item.id}</td>
+                    </tr>
+                    <button
+                    type="button"
+                    className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-blue-400"
+                    onClick={()=>handleDelete(item.id)}
+                    >
+                Delete
+            </button>
+
+                { isEdit ?                     <button
+                    type="button"
+                    className="bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-400"
+                    onClick={()=> setIsEdit(!isEdit) }
+                    >
+                        edit
+                   </button>:
+                    <button
+                    type="button"
+                    className="bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-400"
+                    onClick={()=> setIsEdit(!isEdit) }
+
+                    >
+                        save
+                   </button> }
+                    </li>
+
+            ) )}
+
+                </table>
+        </ul>} 
+      </div>
+    </div>
+  );
+};
+
+export default ToDoList;
