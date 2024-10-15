@@ -11,16 +11,29 @@ import MyApp from '../FetchData/App/MyApp';
 import HomePage from '../FetchData/Components/User/HomePage';
 import Books from './useReducer/Books';
 import ProductsPage from './products/ProductsPage';
+import App from './App';
+import Index from './store/pages/Index';
 
 const router = createBrowserRouter([
+    // {
+    //     path:'/',
+    //     element:<Login/>,
+
+    // },
     {
         path:'/',
-        element:<Login/>,
+        element:<App/>,
+        children:[
+            {index:"/" ,element:<Login/>},
+            
+    {
+        path:'/pokemon',
+        element:<ProductsPage/>,
 
     },
     {
         path:'/products',
-        element:<ProductsPage/>,
+        element:<Index/>,
 
     },
     {
@@ -67,6 +80,12 @@ const router = createBrowserRouter([
     {
         path:'/signup',
         element:<SignUp/>
-    }])
+    }
+
+
+        ]
+    },
+
+])
 
 export default router

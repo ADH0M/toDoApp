@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MainNav from '../navbar/MainNav';
+import { Outlet } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -38,7 +39,6 @@ const Login = () => {
 
   return (
     <div className="container flex  mx-auto bg-gray-400 relative  ">
-      <MainNav/>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto h-fit absolute top-[20%] left-[50%] bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
 

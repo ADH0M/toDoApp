@@ -1,11 +1,13 @@
 import React from 'react'
-import SignUpPage from './home/SignUpPage'
+import MainNav from './navbar/MainNav'
+import { Outlet } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div className='bg-red-50 w-screen h-screen '>
-      <SignUpPage/>
-    </div>
+    <div className='flex gap 10'>
+        <MainNav/>
+        <Outlet/>
+     </div>
   )
 }
 

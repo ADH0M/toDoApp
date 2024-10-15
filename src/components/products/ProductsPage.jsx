@@ -48,8 +48,10 @@ const ProductsPage = () => {
         fetchReducer();
     }, [])
 
-    console.log(state);
-    
+    console.log(state.data.results);
+    useEffect(()=>{
+        setPData(state.data.results)
+    },[state]);
 
     // useEffect(  ()=>{
     //     const fetchData = async () => {
@@ -76,12 +78,16 @@ const ProductsPage = () => {
     
   return (
     <div className='bg-slate-400 w-full h-full flex flex-col flex-wrap justify-center items-center '>
-        {/* {Pdata.length >= 1 && Pdata.map((item)=>( 
-            <div key={item.name} >{item.name}</div>
-         ))} */}
-    </div>
+        {Pdata && Pdata.map((item)=>( 
+            <div key={item.name} > 
+                {item.name}
+            </div>
 
+        ))}
+         <div>data</div>
+    </div>
     // {Pdata ? <pre>{JSON.stringify(Pdata, null, 2)}</pre> : <p>Loading...</p>}
+
 
   )
 }
